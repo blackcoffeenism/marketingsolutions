@@ -34,24 +34,51 @@
   items.forEach(el => io.observe(el));
 })();
 
-// Contact form handler
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const name = document.getElementById('name').value;
-  // Simulate form submission UX
-  const btn = this.querySelector('button[type="submit"]');
-  const prev = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Sending…';
-  setTimeout(() => {
-    document.getElementById('formMessage').textContent = `Thank you, ${name}! We have received your message.`;
-    this.reset();
-    btn.disabled = false;
-    btn.textContent = prev;
-  }, 600);
-});
+// Dynamic fade based on visibility percentage
+(function() {
+  const targets = document.querySelectorAll('.reveal, .card, .project');
+  if (!('IntersectionObserver' in window) || targets.length === 0) return;
+  const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const r = Math.max(0, Math.min(1, entry.intersectionRatio || 0));
+      entry.target.style.opacity = r.toFixed(3);
+    });
+  }, { threshold: thresholds });
+  targets.forEach(el => io.observe(el));
+})();
 
-// (copy button block removed — no code cards on page)
+// Contact form handler (mailto to owner)
+(function() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = (document.getElementById('name')?.value || '').trim();
+    const email = (document.getElementById('email')?.value || '').trim();
+    const message = (document.getElementById('message')?.value || '').trim();
+
+    const btn = this.querySelector('button[type="submit"]');
+    const prev = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Opening email...'; }
+
+    const to = 'delimagerald9@gmail.com';
+    const subject = `New contact from ${name || 'Website Visitor'} - 1infinity Marketing Solutions`;
+    const bodyPlain = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+    const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyPlain)}`;
+
+    // Open the user's email client with prefilled content
+    window.location.href = mailto;
+
+    const info = document.getElementById('formMessage');
+    if (info) {
+      info.textContent = 'Your email app should open with your message. If it does not, please email us at delimagerald9@gmail.com.';
+    }
+
+    // Restore button state shortly after
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = prev; } }, 800);
+  });
+})();
 
 // Theme toggle
 (function() {
@@ -61,10 +88,21 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
   const btn = document.getElementById('themeToggle');
   if (!btn) return;
+  // Initialize aria-pressed to reflect current theme
+  const initial = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  btn.setAttribute('aria-pressed', initial === 'light' ? 'true' : 'false');
   btn.addEventListener('click', () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      root.classList.add('theme-anim');
+      setTimeout(() => root.classList.remove('theme-anim'), 320);
+    }
     const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
     const next = current === 'light' ? 'dark' : 'light';
     root.setAttribute('data-theme', next);
     localStorage.setItem(storageKey, next);
+    btn.setAttribute('aria-pressed', next === 'light' ? 'true' : 'false');
   });
 })();
+
+// Header remains visible (auto-hide disabled per request)
