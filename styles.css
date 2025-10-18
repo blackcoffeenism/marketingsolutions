@@ -349,7 +349,7 @@ html[data-theme="light"] .theme-toggle .toggle-thumb { transform: translateX(20p
     position: relative;
     z-index: 1;
 }
-.hero-image img { display: block; max-width: 300px; width: 100%; border-radius: 10px; box-shadow: var(--shadow-1); }
+.hero-image img { display: block; max-width: 300px; width: auto; border-radius: 10px; box-shadow: var(--shadow-1); }
 
 /* Theme-aware hero logos: crossfade using opacity + slight translate
    Keep container height stable with a min-height to avoid content shift. */
@@ -367,8 +367,19 @@ html[data-theme="light"] .theme-toggle .toggle-thumb { transform: translateX(20p
     box-shadow: var(--shadow-1);
     opacity: 0;
     pointer-events: none;
+        z-index: 2; /* ensure logo sits above decorative backgrounds */
 }
 .hero-logo--light { opacity: 1; pointer-events: auto; }
+
+    /* Make sure the light logo has a subtle card so it remains visible on light backgrounds */
+    :root[data-theme="light"] .hero-logo--light {
+        background: rgba(255,255,255,0.98);
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        box-shadow: 0 10px 24px rgba(19,30,60,0.06);
+        display: block;
+    }
 
 /* animate the fade & slight lift */
 @media (prefers-reduced-motion: no-preference) {
@@ -614,6 +625,26 @@ footer {
     .nav-links.open { display: flex; }
     .hero { flex-direction: column; text-align: center; padding: 36px 14px; }
     .hero-image { margin-top: 24px; }
+    /* Mobile: make hero logos part of document flow and visible */
+    .hero-logo {
+        position: static !important;
+        transform: none !important;
+        display: block !important;
+        margin: 18px auto !important;
+        /* slightly larger on phones: larger min and max */
+        width: clamp(140px, 44vw, 320px) !important;
+        max-width: 90% !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        z-index: 2 !important;
+        padding: 8px !important; /* keep a little breathing room */
+        border-radius: 14px !important;
+    }
+    /* Show only the active theme logo on mobile to avoid overlap */
+    .hero-logo--dark { display: none !important; }
+    .hero-logo--light { display: block !important; }
+    :root[data-theme="dark"] .hero-logo--dark { display: block !important; }
+    :root[data-theme="dark"] .hero-logo--light { display: none !important; }
     .cards { grid-template-columns: 1fr; gap: 16px; }
     .about-content { flex-direction: column; gap: 18px; text-align: center; }
 }
