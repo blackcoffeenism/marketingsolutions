@@ -8,13 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Material Symbols (Google) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" />
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="site-header">
         <div class="navbar">
             <div class="logo">
-                <img src="https://img.icons8.com/color/96/marketing.png" alt="1infinity Marketing Solutions Logo" height="40" width="40">
+                <img src="1infinitylogo.png" alt="1infinity Marketing Solutions Logo" height="40" width="40">
                 <span>1infinity Marketing Solutions</span>
             </div>
             <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">
@@ -58,44 +60,46 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://img.icons8.com/fluency/240/marketing.png" alt="Marketing Hero">
+                <!-- Theme-aware hero logo: show light or dark version depending on data-theme -->
+                <img class="hero-logo hero-logo--light" src="logolightmode.png" alt="1infinity hero logo (light)">
+                <img class="hero-logo hero-logo--dark" src="logodarkmode.png" alt="1infinity hero logo (dark)">
             </div>
         </section>
         <section id="services" class="cards-section reveal">
             <h2>Our Services</h2>
             <div class="cards">
                 <div class="card">
-                    <img src="https://img.icons8.com/color/48/marketing.png" alt="AI Agent">
+                    <span class="material-symbols-outlined card-icon" aria-hidden="true">smart_toy</span>
                     <h3>AI Agent</h3>
                     <p>Deploy custom AI agents to automate support and workflows.</p>
                 </div>
                 <div class="card">
-                    <img src="https://img.icons8.com/color/48/marketing.png" alt="Website Development">
+                    <span class="material-symbols-outlined card-icon" aria-hidden="true">language</span>
                     <h3>Website Development</h3>
                     <p>Design and build fast, conversion-focused websites and landing pages.</p>
                 </div>
                 <div class="card">
-                    <img src="https://img.icons8.com/color/48/marketing.png" alt="Ads Management">
+                    <span class="material-symbols-outlined card-icon" aria-hidden="true">campaign</span>
                     <h3>Ads Management</h3>
                     <p>Plan, launch, and optimize paid campaigns across Google and Meta.</p>
                 </div>
                 <div class="card">
-                    <img src="https://img.icons8.com/color/48/marketing.png" alt="AI Automation System">
+                    <span class="material-symbols-outlined card-icon" aria-hidden="true">settings_suggest</span>
                     <h3>AI Automation System</h3>
                     <p>Integrate AI-driven automations that streamline processes and data flow.</p>
                 </div>
                 <div class="card">
-                    <img src="https://img.icons8.com/color/48/marketing.png" alt="Marketing &amp; Branding">
+                    <span class="material-symbols-outlined card-icon" aria-hidden="true">palette</span>
                     <h3>Marketing &amp; Branding</h3>
                     <p>Craft brand identity and full-funnel assets that drive demand.</p>
                 </div>
                 <div class="card">
-                    <img src="https://img.icons8.com/color/48/marketing.png" alt="Marketing Consultancy">
+                    <span class="material-symbols-outlined card-icon" aria-hidden="true">insights</span>
                     <h3>Marketing Consultancy</h3>
                     <p>Audits, strategy, and roadmaps tailored to your growth goals.</p>
                 </div>
                 <div class="card">
-                    <img src="https://img.icons8.com/color/48/marketing.png" alt="Sales Empowerment Training">
+                    <span class="material-symbols-outlined card-icon" aria-hidden="true">school</span>
                     <h3>Sales Empowerment Training</h3>
                     <p>Train teams on tools, scripts, and processes to close more deals.</p>
                 </div>
@@ -151,7 +155,7 @@
         <section id="about" class="about-section reveal">
             <h2>About Us</h2>
             <div class="about-content">
-                <img src="https://img.icons8.com/color/96/teamwork.png" alt="Our Team">
+                <span class="material-symbols-outlined card-icon" aria-hidden="true" style="width:96px;height:96px;padding:18px;border-radius:12px;">groups</span>
                 <p>We are a team of passionate marketers dedicated to helping businesses succeed in the digital age. Our expertise and creativity drive measurable results for our clients.</p>
             </div>
         </section>

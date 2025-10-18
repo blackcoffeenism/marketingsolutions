@@ -34,9 +34,9 @@
   items.forEach(el => io.observe(el));
 })();
 
-// Dynamic fade based on visibility percentage
+// Dynamic fade based on visibility percentage (items only)
 (function() {
-  const targets = document.querySelectorAll('.reveal, .card, .project');
+  const targets = document.querySelectorAll('.card, .project');
   if (!('IntersectionObserver' in window) || targets.length === 0) return;
   const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
   const io = new IntersectionObserver((entries) => {
@@ -106,3 +106,29 @@
 })();
 
 // Header remains visible (auto-hide disabled per request)
+
+// Ensure header is never hidden: remove any accidental `.is-hidden` class and
+// guard against scripts that might add it later. This is a lightweight, safe
+// protection and won't interfere with other behaviors.
+(function() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+  // Remove immediately if present
+  header.classList.remove('is-hidden');
+  // Observe attribute changes on the header and remove the class if added
+  try {
+    const mo = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.type === 'attributes' && m.attributeName === 'class') {
+          if (header.classList.contains('is-hidden')) {
+            header.classList.remove('is-hidden');
+          }
+        }
+      }
+    });
+    mo.observe(header, { attributes: true, attributeFilter: ['class'] });
+  } catch (e) {
+    // MutationObserver may not be available in some old environments; do nothing
+    // (header was already cleaned above)
+  }
+})();
