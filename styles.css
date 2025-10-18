@@ -357,13 +357,12 @@ html[data-theme="light"] .theme-toggle .toggle-thumb { transform: translateX(20p
 .hero-logo {
     position: absolute;
     left: 50%;
-    top: 50%;
-    /* center both axes, then allow small translateY offsets for animation */
-    transform: translate(-50%, -50%) translateY(0);
-    /* responsive sizing: min 140px, ideal 28vw, max 420px */
-    width: clamp(140px, 28vw, 420px);
-    max-width: 90%;
+    transform: translateX(-50%) translateY(0);
+    max-width: 300px;
+    width: auto; /* don't stretch to full container width — keeps visual centering */
     height: auto;
+    object-fit: contain;
+    object-position: center;
     border-radius: 10px;
     box-shadow: var(--shadow-1);
     opacity: 0;
@@ -373,16 +372,9 @@ html[data-theme="light"] .theme-toggle .toggle-thumb { transform: translateX(20p
 
 /* animate the fade & slight lift */
 @media (prefers-reduced-motion: no-preference) {
-    .hero-logo { transition: opacity .36s ease, transform .36s ease; }
-    .hero-logo--light { transform: translate(-50%, -50%) translateY(0); }
-    .hero-logo--dark { transform: translate(-50%, -50%) translateY(6px); }
-}
-
-@media (max-width: 600px) {
-    .hero-image { min-height: 140px; }
-    .hero-logo { width: clamp(120px, 36vw, 320px); }
-    /* On small screens make the logo participate in flow to avoid clipping */
-    .hero-logo { position: static; transform: none; left: auto; top: auto; margin: 12px auto; }
+  .hero-logo { transition: opacity .36s ease, transform .36s ease; }
+  .hero-logo--light { transform: translateX(-50%) translateY(0); }
+  .hero-logo--dark { transform: translateX(-50%) translateY(6px); }
 }
 
 /* Theme switch: when dark theme is active, show dark logo */
